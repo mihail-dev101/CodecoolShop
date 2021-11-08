@@ -92,6 +92,37 @@ function showCart() {
     let cartSection = document.getElementById('cart');
     let s = CART;
     s.forEach(item => {
-
+        let cartitem = document.createElement('tr');
+        cartitem.className = 'cart-item';
+        let imgtd = document.createElement('td');
+        imgtd.className = 'image border-0';
+        let imgdiv = document.createElement('div');
+        imgdiv.className = 'p-2';
+        let img = document.createElement('img');
+        img.src = URL.createObjectURL(`~/img${item.name}.jpg`);
+        imgdiv.appendChild(img);
+        imgtd.appendChild(imgdiv);
+        cartitem.appendChild(imgtd);
+        let price = document.createElement('td');
+        price.className = 'price border-0 align-middle';
+        price.textContent = item.price;
+        cartitem.appendChild(price);
+        let minus = document.createElement('button');
+        minus.className = 'minus btn btn-danger';
+        let quantity = document.createElement('td');
+        quantity.className = 'border-0 align-middle';
+        quantity.appendChild(minus);
+        quantity.textContent = `${item.quantity}`;
+        let plus = document.createElement('button');
+        plus.className = 'plus btn btn-success';
+        quantity.appendChild(plus);
+        cartitem.appendChild(quantity);
+        let remove = document.createElement('td');
+        remove.className = 'border-0 align-middle';
+        let removeButton = document.createElement('button');
+        removeButton.className = 'remove btn btn-outline-secondary';
+        removeButton.innerHTML = "x";
+        remove.appendChild(removeButton);
+        cartitem.appendChild(remove);
     })
 }
