@@ -615,6 +615,7 @@ pre code {
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
+  margin: 2px;
 }
 
 .col {
@@ -4579,6 +4580,7 @@ input[type="button"].btn-block {
 }
 
 .card-body {
+    margin: 1rem;
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   padding: 1.25rem;
@@ -10002,6 +10004,7 @@ a.text-dark:hover, a.text-dark:focus {
     min-width: 992px !important;
   }
   .container {
+      height:auto;
     min-width: 992px !important;
   }
   .navbar {
