@@ -1,0 +1,60 @@
+{
+  "Item1": {
+    "Id": 1,
+    "Email": "emiliaolteanu13@yahoo.com",
+    "PhoneNumber": "025465232",
+    "Address": "jehdkjkwfrjewk",
+    "City": "shsjhjsisj",
+    "Country": "kdemkfel",
+    "ZipCode": 24654,
+    "BuyerName": "smcmkdm"
+  },
+  "Item2": [
+    {
+      "Product": {
+        "Currency": "USD",
+        "DefaultPrice": 479.0,
+        "ProductCategory": {
+          "Products": null,
+          "Department": "Hardware",
+          "Id": 1,
+          "Name": "Tablet",
+          "Description": "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display."
+        },
+        "Supplier": {
+          "Products": null,
+          "Id": 2,
+          "Name": "Lenovo",
+          "Description": "Computers"
+        },
+        "Id": 2,
+        "Name": "Lenovo IdeaPad Miix 700",
+        "Description": "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand."
+      },
+      "Quantity": 1
+    },
+    {
+      "Product": {
+        "Currency": "USD",
+        "DefaultPrice": 49.9,
+        "ProductCategory": {
+          "Products": null,
+          "Department": "Hardware",
+          "Id": 1,
+          "Name": "Tablet",
+          "Description": "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display."
+        },
+        "Supplier": {
+          "Products": null,
+          "Id": 1,
+          "Name": "Amazon",
+          "Description": "Digital content and services"
+        },
+        "Id": 1,
+        "Name": "Amazon Fire",
+        "Description": "Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support."
+      },
+      "Quantity": 1
+    }
+  ]
+}
