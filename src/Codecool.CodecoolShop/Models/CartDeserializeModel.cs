@@ -14,5 +14,7 @@ namespace Codecool.CodecoolShop.Models
         public string supplier { get; set; }
         public string category { get; set;}
         public string quanity { get; set; }
+
+
     }
 }
