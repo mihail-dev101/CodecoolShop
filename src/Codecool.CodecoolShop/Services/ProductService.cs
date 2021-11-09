@@ -87,6 +87,11 @@ namespace Codecool.CodecoolShop.Services
             this.productCartDao.Add(cartItemModel);
         }
 
+        public void AddCartItemToCart(CartItemModel item)
+        {
+            this.productCartDao.Add(item);
+        }
+
         public void RemoveFromCart(Product product)
         {
             this.productCartDao.Remove(product.Id);

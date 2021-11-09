@@ -83,8 +83,10 @@ goToCartButton.addEventListener('click', () => {
         url: '/Product/Cart',
         data: { content: content },
         dataType: "json",
-        success: function (result) {
-            alert(result.Result);
+        success: function (data) {
+            if (data) {
+                window.location.href = data;
+            }
         }
     });
 })
