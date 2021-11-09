@@ -48,12 +48,12 @@
                         @{ var num = Model.Products.IndexOf(element) + 1;}
                         @num
                     </h5>
-                    <h5 class="card-title">@element.Name</h5>
-                    <p class="card-text">@element.Description.</p>
-                    <p class="card-text">Category: @element.ProductCategory.Department</p>
-                    <p class="card-text">Supplier: @element.Supplier.Name</p>
-                    <p class="card-text text-center"><strong>Price: @element.DefaultPrice.ToString("C2")</strong></p>
-                    <a type="button" class="btn btn-primary" style="float: bottom" asp-area="" asp-controller="Product" asp-action="AddToCart" asp-route-id="@element.Id">Add To Cart</a>
+                    <h5 id="name" class="card-title">@element.Name</h5>
+                    <p id="description" class="card-text">@element.Description.</p>
+                    <p id="category" class="card-text">Category: @element.ProductCategory.Department</p>
+                    <p id="supplier" class="card-text">Supplier: @element.Supplier.Name</p>
+                    <p id="price" class="card-text text-center"><strong>Price: @element.DefaultPrice.ToString("C2")</strong></p>
+                    <a type="button" id="add-to-cart" data-id="@element.Id" class="btn btn-primary" style="float: bottom">Add To Cart</a> @*asp-area="" asp-controller="Product" asp-action="AddToCart" asp-route-id="@element.Id"*@
                 </div>
             </div>
         </div>

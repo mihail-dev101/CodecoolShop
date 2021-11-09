@@ -34,7 +34,37 @@ namespace Codecool.CodecoolShop.Controllers
             var cart = ProductService.GetCart();
             return View(cart.ToList());
         }
-
+        [HttpPost]
+        public IActionResult Cart(string content)
+        {
+            if (content != null)
+            {
+                var cart = JsonConvert.DeserializeObject<CartDeserializeModel[]>(content);
+                List<CartItemModel> cartItemModels = new List<CartItemModel>();
+                foreach(var item in cart)
+                {
+                    CartItemModel cartItem = new CartItemModel();
+                    Product product = new Product();
+                    product.Id = Int32.Parse( item.id);
+                    product.Name = item.name;
+                    ProductCategory category = new ProductCategory();
+                    category.Name = item.category;
+                    product.ProductCategory = category;
+                    Supplier supplier = new Supplier();
+                    supplier.Name = item.supplier;
+                    product.Supplier = supplier;
+                    product.DefaultPrice = Decimal.Parse(item.price.Replace("$",""));
+                    product.Currency = "$";
+                    cartItem.Product = product;
+                    cartItem.Quantity = Int32.Parse(item.quanity);
+                    cartItemModels.Add(cartItem);
+                }
+                
+                return View(cartItemModels);
+            }
+            return View();
+            
+        }
         public IActionResult Index()
         {
             var model = new IndexModel();

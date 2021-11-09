@@ -1,4 +1,5 @@
-﻿const CART = {
+﻿let PRODUCTS = [];
+const CART = {
     KEY: 'bkasjbdfkjasdkfjhaksdfjskd',
     contents: [],
     init() {
@@ -6,6 +7,7 @@
         if (_contents) {
             CART.contents = JSON.parse(_contents);
         } else {
+            CART.contents = [];
             CART.sync();
         }
     },
@@ -22,29 +24,15 @@
         if (match && match[0])
             return match[0];
     },
-    add(id) {
+    add(id, item = null) {
         if (CART.find(id)) {
             CART.increase(id, 1);
         } else {
-            let arr = PRODUCTS.filter(product => {
-                if (product.id == id) {
-                    return true;
-                }
-            });
-            if (arr && arr[0]) {
-                let obj = {
-                    id: arr[0].id,
-                    name: arr[0].name,
-                    price: arr[0].price,
-                    description: arr[0].description,
-                    suplier: arr[0].suplier,
-                    quanity: 1,
-                    category: arr[0].category
-                };
-                CART.contents.push(obj);
-                CART.sync();
+            PRODUCTS.push(item);
+            CART.contents.push(item);
+            CART.sync();
             }
-        }
+        
     },
     increase(id, qty = 1) {
         CART.contents = CART.contents.map(item => {
@@ -80,17 +68,38 @@
     }
 
 };
-let PRODUCTS = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    getProducts(showProducts, errorMessage);
     CART.init();
-    showCart();
+    console.log(CART.contents);
 });
 
+const goToCartButton = document.getElementById('go-to-cart');
+goToCartButton.addEventListener('click', () => {
+    var content = JSON.stringify(CART.contents);
+    $.ajax({
+        type: "POST",
+        traditional: true,
+        url: '/Product/Cart',
+        data: { content: content },
+        dataType: "json",
+        success: function (result) {
+            alert(result.Result);
+        }
+    });
+})
+
+document.querySelectorAll("#add-to-cart").forEach(item => {
+    item.addEventListener("click", (ev) => {
+        getProduct(ev);
+    })
+})
+
+
 function showCart() {
+    console.log("cart");
     let cartSection = document.getElementById('cart');
-    let s = CART;
+    let s = CART.contents;
     s.forEach(item => {
         let cartitem = document.createElement('tr');
         cartitem.className = 'cart-item';
@@ -99,30 +108,118 @@ function showCart() {
         let imgdiv = document.createElement('div');
         imgdiv.className = 'p-2';
         let img = document.createElement('img');
-        img.src = URL.createObjectURL(`~/img${item.name}.jpg`);
+        img.src = `~/img${item.name}.jpg`;
         imgdiv.appendChild(img);
         imgtd.appendChild(imgdiv);
         cartitem.appendChild(imgtd);
         let price = document.createElement('td');
+        let cost = new Intl.NumberFormat('en-CA',
+            { style: 'currency', currency: 'CAD' }).format(item.price);
+        price.textContent = cost;
         price.className = 'price border-0 align-middle';
-        price.textContent = item.price;
         cartitem.appendChild(price);
+
+        let controls = document.createElement('td');
+        controls.className = 'controls';
+        cartitem.appendChild(controls);
         let minus = document.createElement('button');
         minus.className = 'minus btn btn-danger';
-        let quantity = document.createElement('td');
+        minus.setAttribute('data-id', item.id);
+        controls.appendChild(minus);
+        let quantity = document.createElement('span');
         quantity.className = 'border-0 align-middle';
-        quantity.appendChild(minus);
         quantity.textContent = `${item.quantity}`;
+        quantity.setAttribute('data-id', item.id);
+        controls.appendChild(quantity);
         let plus = document.createElement('button');
         plus.className = 'plus btn btn-success';
-        quantity.appendChild(plus);
-        cartitem.appendChild(quantity);
+        plus.setAttribute('data-id', item.id);
+        controls.appendChild(plus);
+
+        cartitem.appendChild(controls);
+        let priceTotal = document.createElement('td');
+        let costTotal = new Intl.NumberFormat('en-CA',
+            { style: 'currency', currency: 'CAD' }).format(item.quantity * item.price);
+        priceTotal.textContent = costTotal;
+        priceTotal.className = 'price border-0 align-middle';
+        cartitem.appendChild(priceTotal);
+
         let remove = document.createElement('td');
         remove.className = 'border-0 align-middle';
         let removeButton = document.createElement('button');
         removeButton.className = 'remove btn btn-outline-secondary';
         removeButton.innerHTML = "x";
+        remove.setAttribute('data-id', item.id);
         remove.appendChild(removeButton);
         cartitem.appendChild(remove);
+        cartSection.appendChild(cartitem);
+        console.log(cartitem);
+        console.log(item);
     })
+}
+
+function incrementCart(ev) {
+    ev.preventDefault();
+    let id = parseInt(ev.target.getAttribute('data-id'));
+    CART.increase(id, 1);
+    let controls = ev.target.parentElement;
+    let qty = controls.querySelector('span');
+    if (item) {
+        qty.textContent = item.quantity;
+    } else {
+        document.getElementById('cart').removeChild(controls.parentElement);
+    }
+}
+
+function decrementCart(ev) {
+    ev.preventDefault();
+    let id = parseInt(ev.target.getAttribute('data-id'));
+    CART.reduce(id, 1);
+    let controls = ev.target.parentElement;
+    let qty = controls.querySelector('span');
+    if (item) {
+        qty.textContent = item.quantity;
+    } else {
+        document.getElementById('cart').removeChild(controls.parentElement);
+    }
+}
+
+function removeFromCart(ev) {
+    ev.preventDefault();
+    let id = parseInt(ev.target.getAttribute('data-id'));
+    CART.remove(id);
+    let controls = ev.target.parentElement;
+    document.getElementById('cart').removeChild(controls.parentElement);
+}
+
+function getProduct(ev) {
+    ev.preventDefault();
+    let id = parseInt(ev.target.getAttribute('data-id'));
+    let product = ev.target.parentElement;
+    let name = product.childNodes[3].innerHTML;
+    let description = product.childNodes[5].innerHTML;
+    let price = new Intl.NumberFormat('en-CA',
+        { style: 'currency', currency: 'CAD' }).format(product.childNodes[11].innerText.substring(8));
+    let supplier = product.childNodes[9].innerHTML.substring(10);
+    let category = product.childNodes[7].innerHTML.substring(10);
+    let item = {
+        id: id,
+        name: name,
+        description: description,
+        price: price,
+        supplier: supplier,
+        category: category,
+        quanity: 1
+    }
+    console.log(item);
+    CART.add(id, item);
+    console.log(CART);
+}
+
+function addItem(ev) {
+    console.log("nsdjd");
+    ev.preventDefault();
+    let id = parseInt(ev.target.getAttribute('data-id'));
+    CART.add(id, 1);
+    showCart();
 }
