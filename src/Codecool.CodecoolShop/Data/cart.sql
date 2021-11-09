@@ -15,7 +15,6 @@ GO
 
 CREATE TABLE [dbo].[cart](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
-	[order_id] [int] NOT NULL,
 	[product_id] [text] NULL,
 	[user_id] [int] NULL,
  CONSTRAINT [PK_cart] PRIMARY KEY CLUSTERED 

@@ -17,6 +17,8 @@ CREATE TABLE [dbo].[order](
 	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[user_id] [int] NOT NULL,
 	[ordered_products] [text] NOT NULL,
+	[cart_id] INT NOT NULL, 
+
  CONSTRAINT [PK_order] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
