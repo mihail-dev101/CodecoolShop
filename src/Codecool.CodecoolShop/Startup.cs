@@ -71,6 +71,8 @@ namespace Codecool.CodecoolShop
             supplierDataStore.Add(amazon);
             Supplier lenovo = new Supplier{Name = "Lenovo", Description = "Computers"};
             supplierDataStore.Add(lenovo);
+            Supplier asus = new Supplier { Name = "Asus", Description = "Computers" };
+            supplierDataStore.Add(asus);
             ProductCategory tablet = new ProductCategory {Name = "Tablet", Department = "Hardware", Description = "A tablet computer, commonly shortened to tablet, is a thin, flat mobile computer with a touchscreen display." };
             ProductCategory laptop = new ProductCategory { Name = "Laptop", Department = "Hardware", Description = "Its a laptop" };
             productCategoryDataStore.Add(tablet);
@@ -79,6 +81,8 @@ namespace Codecool.CodecoolShop
             productDataStore.Add(new Product { Name = "Lenovo IdeaPad Miix 700", DefaultPrice = 479.0m, Currency = "USD", Description = "Keyboard cover is included. Fanless Core m5 processor. Full-size USB ports. Adjustable kickstand.", ProductCategory = laptop, Supplier = lenovo });
             productDataStore.Add(new Product { Name = "Amazon Fire HD 8", DefaultPrice = 89.0m, Currency = "USD", Description = "Amazon's latest Fire HD 8 tablet is a great value for media consumption.", ProductCategory = tablet, Supplier = amazon });
             productDataStore.Add(new Product { Name = "Lenovo Tab M10 Plus", DefaultPrice = 199.0m, Currency = "USD", Description = "Premium look & feel with metal back cover and slim, narrow bezels. Enjoy your favorite videos on the 10.3 FHD display with TDDI technology", ProductCategory = tablet, Supplier = lenovo });
+            productDataStore.Add(new Product { Name = "Asus ROG Strix G15", DefaultPrice = 2899.0m, Currency = "USD", Description = "Professional gaming device. Long live PC Master Race. If its expensive it must be good", ProductCategory = laptop, Supplier = asus });
+            productDataStore.Add(new Product { Name = "Asus ZenPad", DefaultPrice = 369.0m, Currency = "USD", Description = "Elegant, embossed knit patterning gives Asus ZenPad 10 refined, luxurious styling that fits any setting.", ProductCategory = tablet, Supplier = asus });
 
         }
     } 
