@@ -11,5 +11,7 @@ namespace Codecool.CodecoolShop.Daos
         IEnumerable<CartItemModel> GetCart();
 
         void RemoveItemFromCartTotally(int id);
+
+        void EmptyCart();
     }
 }

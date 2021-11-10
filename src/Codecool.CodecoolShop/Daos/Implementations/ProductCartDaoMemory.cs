@@ -113,5 +113,10 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             }
             
         }
+
+        public void EmptyCart()
+        {
+            Cart = new List<CartItemModel>();
+        }
     }
 }

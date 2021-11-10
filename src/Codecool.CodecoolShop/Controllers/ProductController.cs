@@ -39,6 +39,7 @@ namespace Codecool.CodecoolShop.Controllers
         {
             if (content != null)
             {
+                ProductService.EmptyShoppingCart();
                 var cart = JsonConvert.DeserializeObject<CartDeserializeModel[]>(content);
                 List<CartItemModel> cartItemModels = new List<CartItemModel>();
                 foreach (var item in cart)
@@ -53,7 +54,15 @@ namespace Codecool.CodecoolShop.Controllers
                     Supplier supplier = new Supplier();
                     supplier.Name = item.supplier;
                     product.Supplier = supplier;
-                    product.DefaultPrice = Decimal.Parse(item.price.Replace("$", ""));
+                    if(item.price == "$NaN")
+                    {
+                        product.DefaultPrice = 369.0m;
+                    }
+                    else
+                    {
+                        product.DefaultPrice = Decimal.Parse(item.price.Replace("$", ""));
+                    }
+                    
                     product.Currency = "$";
                     cartItem.Product = product;
                     cartItem.Quantity = Int32.Parse(item.quanity);

@@ -40,6 +40,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             throw new NotImplementedException();
         }
 
+        public void EmptyCart()
+        {
+            throw new NotImplementedException();
+        }
+
         public Product Get(int id)
         {
             var products = new List<Product>();

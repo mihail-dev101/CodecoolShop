@@ -101,5 +101,10 @@ namespace Codecool.CodecoolShop.Services
         {
             this.productCartDao.RemoveItemFromCartTotally(product.Id);
         }
+
+        public void EmptyShoppingCart()
+        {
+            this.productCartDao.EmptyCart();
+        }
     }
 }
