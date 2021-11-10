@@ -74,6 +74,7 @@ namespace Codecool.CodecoolShop.Controllers
         }
         public IActionResult Index()
         {
+
             var model = new IndexModel();
             var products = ProductService.GetAllProducts();
             var categories = ProductService.GetAllCategories();
@@ -160,6 +161,7 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult Checkout()
         {
+            SomethingAsync();
             return View();
         }
 
@@ -223,6 +225,12 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public static async Task SomethingAsync()
+        {
+            await EmailSender.Execute();
+
         }
     }
 }
