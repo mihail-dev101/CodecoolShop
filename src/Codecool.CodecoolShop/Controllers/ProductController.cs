@@ -161,7 +161,6 @@ namespace Codecool.CodecoolShop.Controllers
 
         public IActionResult Checkout()
         {
-            SomethingAsync();
             return View();
         }
 
@@ -225,12 +224,6 @@ namespace Codecool.CodecoolShop.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        public static async Task SomethingAsync()
-        {
-            await EmailSender.Execute();
-
         }
     }
 }
