@@ -101,10 +101,10 @@ INSERT INTO [dbo].[product]
            ,[currency])
      VALUES
            ('Asus ROG Strix G15',
-           2,
+           3,
            'Professional gaming device. Long live PC Master Race. If its expensive it must be good'
            ,2899.0
-           ,3
+           ,2
            ,'USD')
 GO
 
@@ -117,9 +117,9 @@ INSERT INTO [dbo].[product]
            ,[currency])
      VALUES
            ('Asus ZenPad',
-           1,
+           3,
            'Elegant, embossed knit patterning gives Asus ZenPad 10 refined, luxurious styling that fits any setting.'
            ,269.0
-           ,3
+           ,1
            ,'USD')
 GO
