@@ -1,12 +1,12 @@
 USE [CodeCoolShop]
 GO
 
-/****** Object:  Table [dbo].[product]    Script Date: 10/11/2021 11:56:02 AM ******/
+/****** Object:  Table [dbo].[product]    Script Date: 10/11/2021 1:50:17 PM ******/
 IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[product]') AND type in (N'U'))
 DROP TABLE [dbo].[product]
 GO
 
-/****** Object:  Table [dbo].[product]    Script Date: 10/11/2021 11:56:02 AM ******/
+/****** Object:  Table [dbo].[product]    Script Date: 10/11/2021 1:50:17 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -28,3 +28,18 @@ CREATE TABLE [dbo].[product](
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
 GO
 
+INSERT INTO [dbo].[product]
+           ([name]
+           ,[supplier_id]
+           ,[description]
+           ,[price]
+           ,[category_id]
+           ,[currency])
+     VALUES
+           ('Amazon Fire',
+           1,
+           'Fantastic price. Large content ecosystem. Good parental controls. Helpful technical support.'
+           ,49.9
+           ,1
+           ,'USD')
+GO

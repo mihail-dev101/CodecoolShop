@@ -23,7 +23,7 @@ namespace Codecool.CodecoolShop.Controllers
             _env = env;
             _logger = logger;
             ProductService = new ProductService(
-                ProductDaoMemory.GetInstance(),
+                ProductDaoDb.GetInstance(),
                 ProductCategoryDaoMemory.GetInstance(),
                 SupplierDaoMemory.GetInstance(),
                 ProductCartDaoMemory.GetInstance(),
