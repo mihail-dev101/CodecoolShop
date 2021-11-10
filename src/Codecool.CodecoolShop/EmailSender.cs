@@ -14,17 +14,17 @@ namespace Codecool.CodecoolShop
             //var apiKey = Environment.GetEnvironmentVariable("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");
             var apiKey = "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";
             var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("alin10nastasa@gmail.com", "RunTime Terror");
+            var from = new EmailAddress("alin10nastasa@gmail.com", "RunTime Terror"); // this is my mail (alin), the api key is set with it so leave this as it is
             var subject = "Purchase confirmation from CodeCool Shop";
-            var to = new EmailAddress("subtilebug.exe@gmail.com", "Example User");
-            var plainTextContent = "and easy to do anywhere, even with python";
-            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
+            var to = new EmailAddress("subtilebug.exe@gmail.com", "Example User"); // this is also my mail (alin) should take the users mail
+            var plainTextContent = "and easy to do anywhere, even with C#"; // for some reason this doesnt apear in the email at all, but i dont want to ruin it and i will leave it here
+            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>"; // this is the actual content of the mail, written like html we can add products and everything we need
             var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
             var response = await client.SendEmailAsync(msg);
 
         }
     }
-    /// i dont know in wich folder this should stay but its ok
+    /// i dont know in which folder this should stay but its ok
     ///             EmailSender.Execute();
     /// copy this where you need to call the function, 
     /// the "var to" should take the mail from the form, or user DB when it will be ready
