@@ -153,10 +153,9 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 connection.Open();
                 var command = factory.CreateCommand();
                 command.Connection = connection;
-                command.CommandText = "Select *,supplier.ID, supplier.name, supplier.description, category.ID, category.name, category.description, category.department" +
-                    " From product" +
-                    "JOIN supplier ON product.supplier_id = supplier.ID" +
-                    "JOIN category ON product.category_id = category.ID;";
+                command.CommandText = "Select *,supplier.ID, supplier.name, supplier.description, category.ID, category.name, category.description, category.department From product " +
+                    "JOIN supplier ON product.supplier_id = supplier.ID " +
+                    "JOIN category ON product.category_id = category.ID; ";
                 using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
