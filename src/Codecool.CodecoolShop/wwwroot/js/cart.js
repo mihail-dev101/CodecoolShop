@@ -166,7 +166,7 @@ document.querySelectorAll('#minus').forEach(button => {
     button.addEventListener("click", (ev) => {
         decrementCart(ev);
         if (CART.find(parseInt(ev.target.getAttribute('data-id')))) {
-            ev.target.parentElement.childNodes[2].innerText = CART.find(parseInt(ev.target.getAttribute('data-id'))).quanity;
+            ev.target.parentElement.querySelector('span').innerText = CART.find(parseInt(ev.target.getAttribute('data-id'))).quanity;
         }
         
     })
@@ -175,7 +175,7 @@ document.querySelectorAll('#minus').forEach(button => {
 document.querySelectorAll('#plus').forEach(button => {
     button.addEventListener('click', (ev) => {
         addItem(ev);
-        ev.target.parentElement.childNodes[2].innerText = CART.find(parseInt(ev.target.getAttribute('data-id'))).quanity;
+        ev.target.parentElement.querySelector('span').innerText = CART.find(parseInt(ev.target.getAttribute('data-id'))).quanity;
     })
 })
 
