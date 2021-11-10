@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Data.Common;
 using Microsoft.Data.SqlClient;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Codecool.CodecoolShop.Manager
 {
@@ -26,5 +27,7 @@ namespace Codecool.CodecoolShop.Manager
         {
             return ConfigurationManager.AppSettings["connectionString"];
         }
+
+        
     }
 }
