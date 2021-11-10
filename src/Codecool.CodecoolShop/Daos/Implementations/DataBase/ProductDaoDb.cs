@@ -85,7 +85,8 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             return products[0];
         }
 
-        public List<Product> GetAll()
+        
+        public IEnumerable<Product> GetBy(Supplier supplier)
         {
             var products = new List<Product>();
             using (var connection = factory.CreateConnection())
@@ -94,18 +95,18 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 connection.Open();
                 var command = factory.CreateCommand();
                 command.Connection = connection;
-                command.CommandText = "Select *,supplier.ID, supplier.name, supplier.description, category.ID, category.name, category.description, category.department" +
-                    " From product" +
-                    "JOIN supplier ON product.supplier_id = supplier.ID" +
-                    "JOIN category ON product.category_id = category.ID;";
+                command.CommandText = "Select *,supplier.ID as 'supplier.ID', supplier.name as 'supplier.name', supplier.description as 'supplier.description', category.ID as 'category.ID', category.name as 'category.name', category.description as 'category.description', category.department as 'category.department' From product " +
+                    "JOIN supplier ON product.supplier_id = supplier.ID " +
+                    "JOIN category ON product.category_id = category.ID " +
+                    $"WHERE supplier_id = {supplier.Id};";
                 using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        var supplier = new Supplier();
-                        supplier.Id = (int)reader["supplier.ID"];
-                        supplier.Name = (string)reader["supplier.name"];
-                        supplier.Description = (string)reader["supplier.description"];
+                        var supplier1 = new Supplier();
+                        supplier1.Id = (int)reader["supplier.ID"];
+                        supplier1.Name = (string)reader["supplier.name"];
+                        supplier1.Description = (string)reader["supplier.description"];
                         var category = new ProductCategory();
                         category.Id = (int)reader["category.ID"];
                         category.Name = (string)reader["category.name"];
@@ -118,7 +119,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                             (string)reader["currency"],
                             (decimal)reader["price"],
                             category,
-                            supplier
+                            supplier1
                         );
                         product.Id = (int)reader["ID"];
                         products.Add(product);
@@ -129,19 +130,61 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             return products;
         }
 
-        public IEnumerable<Product> GetBy(Supplier supplier)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Product> GetBy(ProductCategory productCategory)
         {
-            throw new NotImplementedException();
+            var products = new List<Product>();
+            using (var connection = factory.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                var command = factory.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = "Select *,supplier.ID as 'supplier.ID', supplier.name as 'supplier.name', supplier.description as 'supplier.description', category.ID as 'category.ID', category.name as 'category.name', category.description as 'category.description', category.department as 'category.department' From product " +
+                    "JOIN supplier ON product.supplier_id = supplier.ID " +
+                    "JOIN category ON product.category_id = category.ID " +
+                    $"WHERE supplier_id = {productCategory.Id};";
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var supplier1 = new Supplier();
+                        supplier1.Id = (int)reader["supplier.ID"];
+                        supplier1.Name = (string)reader["supplier.name"];
+                        supplier1.Description = (string)reader["supplier.description"];
+                        var category = new ProductCategory();
+                        category.Id = (int)reader["category.ID"];
+                        category.Name = (string)reader["category.name"];
+                        category.Description = (string)reader["category.description"];
+                        category.Department = (string)reader["category.department"];
+                        var product = new Product
+                        (
+                            (string)reader["name"],
+                            (string)reader["description"],
+                            (string)reader["currency"],
+                            (decimal)reader["price"],
+                            category,
+                            supplier1
+                        );
+                        product.Id = (int)reader["ID"];
+                        products.Add(product);
+
+                    }
+                }
+            }
+            return products;
         }
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            using (var connection = factory.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                var command = factory.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = $"DELETE FROM product WHERE ID = {id}";
+                command.ExecuteNonQuery();
+            }
         }
 
         IEnumerable<Product> IDao<Product>.GetAll()
