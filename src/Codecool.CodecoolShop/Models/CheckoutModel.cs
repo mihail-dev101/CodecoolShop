@@ -38,6 +38,8 @@ namespace Codecool.CodecoolShop.Models
         [StringLength(30, ErrorMessage = "Character limit overflow!")]
         public string BuyerName { get; set; }
 
+        public string Password { get; set; }
+
         public CheckoutModel()
         {
 

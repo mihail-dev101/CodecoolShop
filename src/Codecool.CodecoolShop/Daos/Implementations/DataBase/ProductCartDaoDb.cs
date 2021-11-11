@@ -111,6 +111,31 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             }
         }
 
+        public List<CartItemModel> GetUserCart(int user_id)
+        {
+            var cart = new List<CartItemModel>();
+            using (var connection = factory.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                var command = factory.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = $"Select * From cart Where user_id = {user_id}";
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        CartItemModel item = new CartItemModel();
+                        int productId = Int32.Parse((string)reader["product_id"]);
+                        item.Product = ProductDaoDb.GetInstance().Get(productId);
+                        item.Quantity = (int)reader["quantity"];
+                        item.UserId = (int)reader["user_id"];
+                        cart.Add(item);
+                    }
+                }
+            }
+            return cart;
+        }
         public CartItemModel Get(int id)
         {
             var cart = new List<CartItemModel>();
