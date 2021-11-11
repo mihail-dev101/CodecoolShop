@@ -29,7 +29,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             }
             return instance;
         }
-        public void Add(CheckoutModel item)
+        public void AddUser(CheckoutModel item)
         {
             using (var connection = factory.CreateConnection())
             {

@@ -106,5 +106,10 @@ namespace Codecool.CodecoolShop.Services
         {
             this.productCartDao.EmptyCart();
         }
+
+        public void AddUser(CheckoutModel user)
+        {
+            this.userDao.AddUser(user);
+        }
     }
 }
