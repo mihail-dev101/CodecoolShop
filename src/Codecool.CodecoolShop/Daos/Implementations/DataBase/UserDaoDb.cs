@@ -29,7 +29,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             }
             return instance;
         }
-        public void Add((CheckoutModel, List<CartItemModel>) item)
+        public void AddUser(CheckoutModel item)
         {
             using (var connection = factory.CreateConnection())
             {
@@ -38,7 +38,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 var command = factory.CreateCommand();
                 command.Connection = connection;
                 command.CommandText = $"INSERT INTO user (name, password, email, phone_number, address, city, country, zipcode)" +
-                    $"VALUES ({item.Item1.BuyerName},{item.Item1.Password},{item.Item1.Email},{item.Item1.PhoneNumber},{item.Item1.Address},{item.Item1.City},{item.Item1.Country},{item.Item1.ZipCode});";
+                    $"VALUES ({item.BuyerName},{item.Password},{item.Email},{item.PhoneNumber},{item.Address},{item.City},{item.Country},{item.ZipCode});";
                 command.ExecuteNonQuery();
             }
 
@@ -118,6 +118,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 command.CommandText = $"DELETE FROM cart WHERE cart.user_id = {id}";
                 command.ExecuteNonQuery();
             }
+        }
+
+        public void Add((CheckoutModel, List<CartItemModel>) item)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -8,5 +8,6 @@ namespace Codecool.CodecoolShop.Daos
 {
     public interface IUserDao : IDao<(CheckoutModel, List<CartItemModel>)>
     {
+
     }
 }

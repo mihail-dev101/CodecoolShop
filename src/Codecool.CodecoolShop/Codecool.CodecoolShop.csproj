@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\Class.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="Views\Product\Privacy - Copy.cshtml" />
   </ItemGroup>
 
