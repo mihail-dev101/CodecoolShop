@@ -44,6 +44,20 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
          }
 
+        public void UpdateUser(CheckoutModel item)
+        {
+            using (var connection = factory.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                var command = factory.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = $"UPDATE [user] SET name = '{item.BuyerName}', email = '{item.Email}', phone_number = '{item.PhoneNumber}', city = '{item.City}', country = '{item.Country}', zipcode = '{item.ZipCode}' " +
+                    $"WHERE ID = {item.Id};";
+                command.ExecuteNonQuery();
+            }
+        }
+
         public (CheckoutModel, List<CartItemModel>) Get(int id)
         {
             var usersData = new List<(CheckoutModel, List<CartItemModel>)>();
@@ -125,35 +139,33 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             throw new NotImplementedException();
         }
 
-        //public CheckoutModel Get(string password)
-        //{
-        //    CheckoutModel user = new CheckoutModel();
-        //    using (var connection = factory.CreateConnection())
-        //    {
-        //        connection.ConnectionString = connectionString;
-        //        connection.Open();
-        //        var command = factory.CreateCommand();
-        //        command.Connection = connection;
-        //        command.CommandText = "SELECT *, cart.ID as 'cart.ID', cart.product_id as 'cart.product_id', cart.quantity as 'cart.quantity' FROM [user]" +
-        //            "JOIN cart ON cart.user_id = user.ID" +
-        //            $"WHERE user.ID = {id}";
-        //        using (DbDataReader reader = command.ExecuteReader())
-        //        {
-        //            CheckoutModel checkout = new CheckoutModel();
-        //            checkout.Id = (int)reader["ID"];
-        //            checkout.PhoneNumber = (string)reader["phone_number"];
-        //            checkout.ZipCode = Int32.Parse((string)reader["zipcode"]);
-        //            checkout.Email = (string)reader["email"];
-        //            checkout.Country = (string)reader["country"];
-        //            checkout.City = (string)reader["city"];
-        //            checkout.BuyerName = (string)reader["name"];
-        //            checkout.Password = (string)reader["password"];
-        //            checkout.Address = (string)reader["address"];
-        //            List<CartItemModel> cart = ProductCartDaoDb.GetInstance().GetUserCart(checkout.Id);
-        //            usersData.Add((checkout, cart));
-        //        }
-        //    }
-        //    return usersData[0];
-        //}
+        public CheckoutModel GetUserByCredentials(string email, string password)
+        {
+            var users = new List<CheckoutModel>();
+            using (var connection = factory.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                var command = factory.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = "SELECT * FROM [user]" +
+                                      $"WHERE user.email = {email} and user.password = {password}";
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    CheckoutModel user = new CheckoutModel();
+                    user.Id = (int)reader["ID"];
+                    user.PhoneNumber = (string)reader["phone_number"];
+                    user.ZipCode = Int32.Parse((string)reader["zipcode"]);
+                    user.Email = (string)reader["email"];
+                    user.Country = (string)reader["country"];
+                    user.City = (string)reader["city"];
+                    user.BuyerName = (string)reader["name"];
+                    user.Password = (string)reader["password"];
+                    user.Address = (string)reader["address"];
+                    users.Add(user);
+                }
+            }
+            return users[0];
+        }
     }
 }

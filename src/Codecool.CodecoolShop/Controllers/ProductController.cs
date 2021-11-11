@@ -251,28 +251,7 @@ namespace Codecool.CodecoolShop.Controllers
         [HttpPost]
         public ActionResult Signin(SigninModel model)
         {
-            //if (ModelState.IsValid)
-            //{
-            //    Checkout user = new ;
-
-            //    If user is valid & present in database, we are redirecting it to Welcome page.
-            //    if (isValidUser != null)
-            //    {
-            //        FormsAuthentication.SetAuthCookie(model.Email, false);
-            //        return RedirectToAction("Index");
-            //    }
-            //    else
-            //    {
-            //        If the username and password combination is not present in DB then error message is shown.
-            //        ModelState.AddModelError("Failure", "Wrong Username and password combination !");
-            //        return View();
-            //    }
-            //}
-            //else
-            //{
-            //    If model state is not valid, the model with error message is returned to the View.
-            //    return View(model);
-            //}
+            
             return null;
         }
 

@@ -50,6 +50,16 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         {
 
         }
+
+        public void UpdateUser(CheckoutModel user)
+        {
+
+        }
+
+        public CheckoutModel GetUserByCredentials(string email, string password)
+        {
+            return null;
+        }
     }
 }
 
