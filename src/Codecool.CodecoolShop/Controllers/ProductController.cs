@@ -26,7 +26,7 @@ namespace Codecool.CodecoolShop.Controllers
                 ProductDaoDb.GetInstance(),
                 ProductCategoryDaoMemory.GetInstance(),
                 SupplierDaoMemory.GetInstance(),
-                ProductCartDaoMemory.GetInstance(),
+                ProductCartDaoDb.GetInstance(),
                 UserDaoMemory.GetInstance());
         }
         public IActionResult Cart()

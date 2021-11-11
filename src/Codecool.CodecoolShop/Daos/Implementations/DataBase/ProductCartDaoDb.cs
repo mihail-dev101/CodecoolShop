@@ -13,7 +13,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         DbProviderFactory factory;
         string provider;
         string connectionString;
-        private ProductCartDaoDb instance = null;
+        private static ProductCartDaoDb instance = null;
         private ProductCartDaoDb()
         {
             DbProviderFactories.RegisterFactory("Microsoft.Data.SqlClient", Microsoft.Data.SqlClient.SqlClientFactory.Instance);
@@ -22,7 +22,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             factory = DbProviderFactories.GetFactory(provider);
         }
 
-        public ProductCartDaoDb GetInstance()
+        public static ProductCartDaoDb GetInstance()
         {
             if (instance == null)
             {
