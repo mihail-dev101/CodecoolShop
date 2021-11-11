@@ -45,7 +45,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             }
         }
 
-        public void EmptyCart(int? user_id = null)
+        public void EmptyCart(int? user_id = 0)
         {
             using (var connection = factory.CreateConnection())
             {

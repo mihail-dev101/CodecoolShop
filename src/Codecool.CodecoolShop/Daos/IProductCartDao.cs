@@ -12,6 +12,6 @@ namespace Codecool.CodecoolShop.Daos
 
         void RemoveItemFromCartTotally(int id, int? user_id = null);
 
-        void EmptyCart(int? user_id = null);
+        void EmptyCart(int? user_id = 0);
     }
 }

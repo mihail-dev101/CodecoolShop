@@ -66,6 +66,7 @@ namespace Codecool.CodecoolShop.Controllers
                     product.Currency = "$";
                     cartItem.Product = product;
                     cartItem.Quantity = Int32.Parse(item.quanity);
+                    cartItemModels.Add(cartItem);
                     ProductService.AddCartItemToCart(cartItem);
                 }
             
@@ -87,34 +88,34 @@ namespace Codecool.CodecoolShop.Controllers
             
         }
 
-        public IActionResult IncreaseQuantity(int id)
-        {
-            var product = ProductService.GetProduct(id);
-            ProductService.AddProductToCart(product);
+        //public IActionResult IncreaseQuantity(int id)
+        //{
+        //    var product = ProductService.GetProduct(id);
+        //    ProductService.AddProductToCart(product);
 
-            return RedirectToAction("Cart");
-        }
+        //    return RedirectToAction("Cart");
+        //}
 
-        public IActionResult DecreaseQuantity(int id)
-        {
-            var product = ProductService.GetProduct(id);
-            ProductService.RemoveFromCart(product);
-            return RedirectToAction("Cart");
-        }
+        //public IActionResult DecreaseQuantity(int id)
+        //{
+        //    var product = ProductService.GetProduct(id);
+        //    ProductService.RemoveFromCart(product);
+        //    return RedirectToAction("Cart");
+        //}
 
-        public IActionResult RemoveItemTotally(int id)
-        {
-            var product = ProductService.GetProduct(id);
-            ProductService.RemoveItemFromCartTotally(product);
-            return RedirectToAction("Cart");
-        }
+        //public IActionResult RemoveItemTotally(int id)
+        //{
+        //    var product = ProductService.GetProduct(id);
+        //    ProductService.RemoveItemFromCartTotally(product);
+        //    return RedirectToAction("Cart");
+        //}
 
-        public IActionResult AddToCart(int id)
-        {
-            var product = ProductService.GetProduct(id);
-            ProductService.AddProductToCart(product);
-            return RedirectToAction("Index");
-        }
+        //public IActionResult AddToCart(int id)
+        //{
+        //    var product = ProductService.GetProduct(id);
+        //    ProductService.AddProductToCart(product);
+        //    return RedirectToAction("Index");
+        //}
         public IActionResult ProductsByCategory(int id)
         {
             var model = new IndexModel();
@@ -175,14 +176,6 @@ namespace Codecool.CodecoolShop.Controllers
                 ProductService.AddOrder(order);
                 return RedirectToAction("Payment");
             }
-            
-            //string userEmail = user.Email;
-            //string userPhoneNumber = user.PhoneNumber;
-            //string userAddress = user.Address;
-            //string userCity = user.City;
-            //string userCountry = user.Country;
-            //int userZipCode = user.ZipCode;
-            //string userName = user.BuyerName;
             return View();
         }
 
