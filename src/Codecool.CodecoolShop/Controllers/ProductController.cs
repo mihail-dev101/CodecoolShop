@@ -24,7 +24,7 @@ namespace Codecool.CodecoolShop.Controllers
             _logger = logger;
             ProductService = new ProductService(
                 ProductDaoDb.GetInstance(),
-                ProductCategoryDaoMemory.GetInstance(),
+                ProductCategoryDaoDb.GetInstance(),
                 SupplierDaoDb.GetInstance(),
                 ProductCartDaoDb.GetInstance(),
                 UserDaoDb.GetInstance());
