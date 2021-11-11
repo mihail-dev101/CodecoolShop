@@ -33,36 +33,33 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(CartItemModel item)
         {
-            throw new NotImplementedException();
+            using (var connection = factory.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                var command = factory.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = $"INSERT INTO cart (product_id, user_id, quantity)" +
+                    $"VALUES('{item.Product.Id}',{item.UserId},{item.Quantity});";
+                command.ExecuteNonQuery();
+            }
         }
 
-        public void EmptyCart()
+        public void EmptyCart(int? user_id = null)
         {
-            throw new NotImplementedException();
+            using (var connection = factory.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                var command = factory.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = $"DELETE FROM cart WHERE user_id = {user_id} ";
+                command.ExecuteNonQuery();
+            }
         }
 
         
         public IEnumerable<CartItemModel> GetCart()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void RemoveItemFromCartTotally(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        CartItemModel IDao<CartItemModel>.Get(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        IEnumerable<CartItemModel> IDao<CartItemModel>.GetAll()
         {
             var cart = new List<CartItemModel>();
             using (var connection = factory.CreateConnection())
@@ -71,25 +68,104 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 connection.Open();
                 var command = factory.CreateCommand();
                 command.Connection = connection;
-                command.CommandText = "Select *, cart.ID as 'cart.ID',cart.user_ID as 'cart.user_ID',cart.product_id as 'cart.product_id' From product, cart";
+                command.CommandText = "Select * From cart";
                 using (DbDataReader reader = command.ExecuteReader())
                 {
                     while (reader.Read())
                     {
                         CartItemModel item = new CartItemModel();
-                        string allProducts = (string)reader["product_id"];
-                        string[] productIds = allProducts.Split(",");
-                        List<int> ids = new List<int>();
-                        foreach(var id in productIds)
-                        {
-                            ids.Add(Int32.Parse(id));
-                        }
+                        int productId = Int32.Parse((string)reader["product_id"]);
+                        item.Product = ProductDaoDb.GetInstance().Get(productId);
+                        item.Quantity = (int)reader["quantity"];
                         item.UserId = (int)reader["user_id"];
-
+                        cart.Add(item);
                     }
                 }
             }
-            return null;
-    }
+            return cart;
+        }
+
+        public void Remove(int id, int? user_id=null)
+        {
+            using (var connection = factory.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                var command = factory.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = $"UPDATE cart SET quantity = quantity - 1 WHERE user_id = {user_id} AND product_id = {id}";
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public void RemoveItemFromCartTotally(int id, int? user_id=null)
+        {
+            using (var connection = factory.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                var command = factory.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = $"DELETE FROM cart WHERE user_id = {user_id} AND product_id = {id}";
+                command.ExecuteNonQuery();
+            }
+        }
+
+        public CartItemModel Get(int id)
+        {
+            var cart = new List<CartItemModel>();
+            using (var connection = factory.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                var command = factory.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = $"Select * From cart Where ID = {id}";
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        CartItemModel item = new CartItemModel();
+                        int productId = Int32.Parse((string)reader["product_id"]);
+                        item.Product = ProductDaoDb.GetInstance().Get(productId);
+                        item.Quantity = (int)reader["quantity"];
+                        item.UserId = (int)reader["user_id"];
+                        cart.Add(item);
+                    }
+                }
+            }
+            return cart[0];
+        }
+
+        public IEnumerable<CartItemModel> GetAll()
+        {
+            var cart = new List<CartItemModel>();
+            using (var connection = factory.CreateConnection())
+            {
+                connection.ConnectionString = connectionString;
+                connection.Open();
+                var command = factory.CreateCommand();
+                command.Connection = connection;
+                command.CommandText = "Select * From cart";
+                using (DbDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        CartItemModel item = new CartItemModel();
+                        int productId = Int32.Parse((string)reader["product_id"]);
+                        item.Product = ProductDaoDb.GetInstance().Get(productId);
+                        item.Quantity = (int)reader["quantity"];
+                        item.UserId = (int)reader["user_id"];
+                        cart.Add(item);
+                    }
+                }
+            }
+            return cart;
+        }
+
+        public void Remove(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

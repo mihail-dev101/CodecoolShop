@@ -187,7 +187,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             }
         }
 
-        IEnumerable<Product> IDao<Product>.GetAll()
+        public IEnumerable<Product> GetAll()
         {
             var products = new List<Product>();
             using (var connection = factory.CreateConnection())

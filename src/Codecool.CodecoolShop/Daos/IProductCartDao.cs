@@ -10,8 +10,8 @@ namespace Codecool.CodecoolShop.Daos
     {
         IEnumerable<CartItemModel> GetCart();
 
-        void RemoveItemFromCartTotally(int id);
+        void RemoveItemFromCartTotally(int id, int? user_id = null);
 
-        void EmptyCart();
+        void EmptyCart(int? user_id = null);
     }
 }

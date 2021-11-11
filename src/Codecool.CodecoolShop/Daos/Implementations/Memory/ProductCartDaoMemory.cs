@@ -96,7 +96,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             }
         }
 
-        public void RemoveItemFromCartTotally(int id)
+        public void RemoveItemFromCartTotally(int id,int? user_id = null)
         {
             CartItemModel productToRemove = null;
             foreach(var item in Cart)
@@ -114,7 +114,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             
         }
 
-        public void EmptyCart()
+        public void EmptyCart(int? user_id = null)
         {
             Cart = new List<CartItemModel>();
         }
