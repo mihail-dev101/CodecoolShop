@@ -111,5 +111,22 @@ namespace Codecool.CodecoolShop.Services
         {
             this.userDao.AddUser(user);
         }
+
+        //function to check if User is valid or not
+        public RegistrationModel IsValidUser(SigninModel model)
+        {
+            //using (var dataContext = new LoginRegistrationInMVCEntities())
+            //{
+            //    //Retireving the user details from DB based on username and password enetered by user.
+            //    RegisterUser user = dataContext.RegisterUsers.Where(query => query.Email.Equals(model.Email) && query.Password.Equals(model.Password)).SingleOrDefault();
+            //    //If user is present, then true is returned.
+            //    if (user == null)
+            //        return null;
+            //    //If user is not present false is returned.
+            //    else
+            //        return user;
+            //}
+            return null;
+        }
     }
 }

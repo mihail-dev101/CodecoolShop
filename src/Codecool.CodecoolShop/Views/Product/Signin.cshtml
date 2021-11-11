@@ -1,0 +1,19 @@
+﻿@model Codecool.CodecoolShop.Models.SigninModel
+
+@using (Html.BeginForm("Signin", "Product"))
+{
+    <div class="container">
+        <div>
+            <div>
+                <h3>Sign in</h3>
+                <i class="fa fa-envelope"></i> Email<br />
+                @Html.TextBoxFor(m => m.Email)
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })<br />
+                <i class="fa fa-key" aria-hidden="true"></i> Password <br />
+                @Html.TextBoxFor(m => m.Password, new { @class = "form-control", type = "Password" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })<br />
+                <input type="submit" value="Sign In" />
+            </div>
+        </div>
+    </div>
+}

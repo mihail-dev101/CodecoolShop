@@ -10,7 +10,6 @@ namespace Codecool.CodecoolShop.Models
     {
         [Required]
         [StringLength(100, ErrorMessage = "Character limit overflow!")]
-        [Display(Name = "name")]
         public string Name { get; set; }
         [Required]
         [EmailAddress(ErrorMessage = "Please enter a valid Email Address!")]

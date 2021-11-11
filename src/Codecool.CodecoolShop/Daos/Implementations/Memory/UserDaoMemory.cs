@@ -45,6 +45,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         {
             return data;
         }
+
+        public void AddUser(CheckoutModel user)
+        {
+
+        }
     }
 }
 

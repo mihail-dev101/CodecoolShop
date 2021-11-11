@@ -14,19 +14,19 @@ namespace Codecool.CodecoolShop.Models
         [EmailAddress(ErrorMessage = "Please enter a valid Email Address!")]
         public string Email { get; set; }
 
-        [Required]
+        
         [Phone(ErrorMessage = "Please enter a valid Phone Number!")]
         public string PhoneNumber { get; set; }
 
-        [Required]
+        
         [StringLength(100, ErrorMessage = "Character limit overflow!")]
         public string Address { get; set; }
 
-        [Required]
+        
         [StringLength(20, ErrorMessage = "Character limit overflow!")]
         public string City { get; set; }
 
-        [Required]
+        
         [StringLength(20, ErrorMessage = "Character limit overflow!")]
         public string Country { get; set; }
 
@@ -37,7 +37,8 @@ namespace Codecool.CodecoolShop.Models
         [Required]
         [StringLength(30, ErrorMessage = "Character limit overflow!")]
         public string BuyerName { get; set; }
-
+        [Required]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
         public CheckoutModel()
