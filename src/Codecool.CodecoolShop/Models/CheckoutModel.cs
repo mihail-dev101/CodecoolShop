@@ -46,6 +46,19 @@ namespace Codecool.CodecoolShop.Models
 
         }
 
+        public CheckoutModel(int id, string email, string phoneNumber, string address, string city, string country, int zipCode, string buyerName, string password)
+        {
+            Id = id;
+            Email = email;
+            PhoneNumber = phoneNumber;
+            Address = address;
+            City = city;
+            Country = country;
+            ZipCode = zipCode;
+            BuyerName = buyerName;
+            Password = password;
+        }
+
         /*public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if(Email == null || PhoneNumber == null || Address == null || City == null || Country == null || BuyerName == null )
