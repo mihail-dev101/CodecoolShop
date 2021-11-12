@@ -251,17 +251,47 @@ namespace Codecool.CodecoolShop.Controllers
                 return View("Register");
             }
         }
-
-
-        
-        [HttpPost]
-        public ActionResult Signin(SigninModel model)
+        public ActionResult Signin()
         {
-            
-            return null;
+            return View();
         }
 
 
+        [HttpPost]
+        public ActionResult Signin(SigninModel model)
+        {
+            if (ModelState.IsValid && ProductService.IsValidUser(model) != null)
+            {
+
+                ViewBag.Message = $"Welcome {model.Email}";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                ViewBag.Message = "Wrong credentials";
+                return View("Login");
+            }
+        }
+        //public ActionResult Signin(SigninModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        CheckoutModel userDetails = new CheckoutModel();
+        //        userDetails.Email = model.Email;
+        //        userDetails.Password = model.Password;
+        //        if(ProductService.IsValidUser(model) != null)
+        //        {
+        //            ViewBag.Message = "User Details Saved";
+        //            return RedirectToAction("Index");
+        //        }
+        //        else
+        //        {
+        //            ViewBag.Message = "Wrong credentials";
+        //            return View("Login");
+        //        }
+        //    }
+        //    return View("Login");
+        //}
 
 
         public ActionResult Logout()

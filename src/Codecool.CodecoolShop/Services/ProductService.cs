@@ -115,7 +115,18 @@ namespace Codecool.CodecoolShop.Services
         
         public CheckoutModel IsValidUser(SigninModel model)
         {
-             return this.userDao.GetUserByCredentials(model.Email, model.Password);
-         }
+            CheckoutModel validUser = new CheckoutModel();
+            validUser.Email = model.Email;
+            validUser.Password = model.Password;
+            if (this.userDao.GetUserByCredentials(validUser.Email, validUser.Password) != null)
+            {
+                return validUser;
+            }
+            else
+            {
+                return null;
+            }
+             
+        }
     }
 }

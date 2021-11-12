@@ -1,4 +1,5 @@
 ﻿////const { data } = require("jquery");
+////
 
 let PRODUCTS = [];
 const CART = {
@@ -184,3 +185,9 @@ document.querySelectorAll('#remove').forEach(button => {
         removeFromCart(ev);
     })
 })
+
+
+
+    
+    
+

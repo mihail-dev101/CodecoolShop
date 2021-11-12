@@ -148,8 +148,8 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 connection.Open();
                 var command = factory.CreateCommand();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM [user]" +
-                                      $"WHERE user.email = {email} and user.password = {password}";
+                command.CommandText = "SELECT * FROM [user] " +
+                                      $"WHERE CONVERT(VARCHAR(MAX), [user].email) = '{email}' and CONVERT(VARCHAR(MAX), [user].password) = '{password}'";
                 using (DbDataReader reader = command.ExecuteReader())
                 {
                     CheckoutModel user = new CheckoutModel();
