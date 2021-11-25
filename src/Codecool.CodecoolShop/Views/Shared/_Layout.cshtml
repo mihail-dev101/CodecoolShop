@@ -31,7 +31,17 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Signin">Sign in</a>
                         </li>
-                    </ul>
+                        @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                            <li>
+                                @{
+                                    foreach (var cookie in HttpContextAccessor.HttpContext.Request.Cookies)
+                                    {
+                                        
+                                        //@cookie.Key @cookie.Value
+                                    }
+                                }
+                            </li>
+                        </ul>
                 </div>
             </div>
                 <a id="go-to-cart" class="btn btn-secondary">

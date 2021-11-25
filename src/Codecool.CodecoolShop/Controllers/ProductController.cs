@@ -263,12 +263,12 @@ namespace Codecool.CodecoolShop.Controllers
         [HttpPost]
         public ActionResult Signin(SigninModel model)
         {
-            var user = ProductService.IsValidUser(model);
+            var user = ProductService.GetUserIfValid(model);
             if (ModelState.IsValid && user != null)
             {
 
                 ViewBag.Message = $"Welcome {model.Email}";
-                HttpContext.Response.Cookies.Append("user", user.Id.ToString(), new CookieOptions { Expires = DateTime.Now.AddHours(3) });
+                HttpContext.Response.Cookies.Append("user", user.Email, new CookieOptions { Expires = DateTime.Now.AddHours(3) });
                 return RedirectToAction("Index");
             }
             else
