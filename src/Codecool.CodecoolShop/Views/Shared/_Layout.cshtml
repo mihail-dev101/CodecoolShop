@@ -32,18 +32,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Signin">Sign in</a>
                         </li>
                         @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-                            @*<li class="nav-item">
-                                @{
-                                    foreach (var cookie in HttpContextAccessor.HttpContext.Request.Cookies)
-                                    {
-                                        if(cookie.Key == "userName")
-                                        {
-                                            @cookie.Key @cookie.Value
-                                        }
-
-                                    }
-                                }
-                            </li>*@
+                            
                         @{ if(HttpContextAccessor.HttpContext.Request.Cookies["userId"]!= null)
             {
                 if (HttpContextAccessor.HttpContext.Request.Cookies["userName"] != null)

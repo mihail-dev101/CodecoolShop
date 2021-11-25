@@ -34,8 +34,17 @@ namespace Codecool.CodecoolShop.Controllers
         }
         public IActionResult Cart()
         {
-            var cart = ProductService.GetCart();
-            return View(cart.ToList());
+            List<CartItemModel> cart = new List<CartItemModel>();
+            if (HttpContext.Request.Cookies["userId"] != null)
+            {
+                cart = ProductService.GetCartForUser(Int32.Parse(HttpContext.Request.Cookies["userId"]));
+            }
+            else
+            {
+                cart = ProductService.GetCart().ToList();
+            }
+            
+            return View(cart);
         }
         [HttpPost]
         public JsonResult Cart(string content)
@@ -91,34 +100,6 @@ namespace Codecool.CodecoolShop.Controllers
             
         }
 
-        //public IActionResult IncreaseQuantity(int id)
-        //{
-        //    var product = ProductService.GetProduct(id);
-        //    ProductService.AddProductToCart(product);
-
-        //    return RedirectToAction("Cart");
-        //}
-
-        //public IActionResult DecreaseQuantity(int id)
-        //{
-        //    var product = ProductService.GetProduct(id);
-        //    ProductService.RemoveFromCart(product);
-        //    return RedirectToAction("Cart");
-        //}
-
-        //public IActionResult RemoveItemTotally(int id)
-        //{
-        //    var product = ProductService.GetProduct(id);
-        //    ProductService.RemoveItemFromCartTotally(product);
-        //    return RedirectToAction("Cart");
-        //}
-
-        //public IActionResult AddToCart(int id)
-        //{
-        //    var product = ProductService.GetProduct(id);
-        //    ProductService.AddProductToCart(product);
-        //    return RedirectToAction("Index");
-        //}
         public IActionResult ProductsByCategory(int id)
         {
             var model = new IndexModel();

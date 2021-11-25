@@ -118,5 +118,10 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         {
             Cart = new List<CartItemModel>();
         }
+
+        public List<CartItemModel> GetUserCart(int user_id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

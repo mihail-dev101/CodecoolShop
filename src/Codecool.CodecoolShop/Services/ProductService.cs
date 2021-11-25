@@ -118,5 +118,9 @@ namespace Codecool.CodecoolShop.Services
             return this.userDao.GetUserByCredentials(model.Email, model.Password);
              
         }
+        public List<CartItemModel> GetCartForUser(int userId)
+        {
+            return this.productCartDao.GetUserCart(userId);
+        }
     }
 }
