@@ -152,17 +152,19 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                                       $"WHERE CONVERT(VARCHAR(MAX), [user].email) = '{email}' and CONVERT(VARCHAR(MAX), [user].password) = '{password}'";
                 using (DbDataReader reader = command.ExecuteReader())
                 {
-                    CheckoutModel user = new CheckoutModel();
-                    user.Id = (int)reader["ID"];
-                    user.PhoneNumber = (string)reader["phone_number"];
-                    user.ZipCode = Int32.Parse((string)reader["zipcode"]);
-                    user.Email = (string)reader["email"];
-                    user.Country = (string)reader["country"];
-                    user.City = (string)reader["city"];
-                    user.BuyerName = (string)reader["name"];
-                    user.Password = (string)reader["password"];
-                    user.Address = (string)reader["address"];
-                    users.Add(user);
+                    while (reader.Read()) {
+                        CheckoutModel user = new CheckoutModel();
+                        user.Id = (int)reader["ID"];
+                        user.PhoneNumber = reader["phone_number"]?.ToString()??"";
+                        user.ZipCode = Int32.Parse(reader["zipcode"]?.ToString() ?? "");
+                        user.Email = reader["email"]?.ToString() ?? "";
+                        user.Country = reader["country"]?.ToString() ?? "";
+                        user.City = reader["city"]?.ToString() ?? "";
+                        user.BuyerName = reader["name"]?.ToString() ?? "";
+                        user.Password = reader["password"]?.ToString() ?? "";
+                        user.Address = reader["address"]?.ToString() ?? "";
+                        users.Add(user);
+                    }
                 }
             }
             return users[0];
