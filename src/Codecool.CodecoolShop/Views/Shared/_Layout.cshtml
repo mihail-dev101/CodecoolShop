@@ -37,13 +37,13 @@
             {
                 if (HttpContextAccessor.HttpContext.Request.Cookies["userName"] != null)
                 {
-                    <li class="nav-item" data-user-id="@HttpContextAccessor.HttpContext.Request.Cookies["userId"]">
+                    <li class="nav-item" id="user-id" data-user-id="@HttpContextAccessor.HttpContext.Request.Cookies["userId"]">
                         Hello @HttpContextAccessor.HttpContext.Request.Cookies["userName"]
                     </li>
                 }
                 else
                 {
-                    <li class="nav-item" data-user-id="@HttpContextAccessor.HttpContext.Request.Cookies["userId"]">
+                    <li class="nav-item" id="user-id" data-user-id="@HttpContextAccessor.HttpContext.Request.Cookies["userId"]">
                         Hello User
                     </li>
                 }      

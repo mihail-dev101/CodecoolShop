@@ -6,12 +6,16 @@ const CART = {
     KEY: 'bkasjbdfkjasdkfjhaksdfjskd',
     contents: [],
     init() {
+        
         let _contents = localStorage.getItem(CART.KEY);
         if (_contents) {
             CART.contents = JSON.parse(_contents);
         } else {
             CART.contents = [];
             CART.sync();
+        }
+        if (loggedUserId != null) {
+            getUserProducts();
         }
     },
     async sync() {
@@ -29,7 +33,13 @@ const CART = {
     },
     add(id, item = null) {
         if (CART.find(id)) {
-            CART.increase(id, 1);
+            if (item != null) {
+                CART.increase(id, item.quanity);
+            }
+            else {
+                CART.increase(id, 1);
+            }
+            
         } else {
             PRODUCTS.push(item);
             CART.contents.push(item);
@@ -135,6 +145,35 @@ function removeFromCart(ev) {
     document.getElementById('cart').removeChild(controls.parentElement);
 }
 
+function getUserProducts() {
+    let productsInCart = querySelectorAll(".cart-item");
+    productsInCart.forEach(x => {
+        let id = parseInt(x.getAttribute('data-id'));
+        let name = x.childNodes[0].childNodes[1].childNodes[0].getAttribute('id');
+        let description = x.getAttribute('data-description');
+        let price = new Intl.NumberFormat('en-CA',
+            { style: 'currency', currency: 'CAD' }).format(x.childNodes[1].getAttribute['data-price']);
+        let supplier = x.getAttribute('data-supplier');
+        let category = x.getAttribute('data-category');
+        let item = {
+            id: id,
+            name: name,
+            description: description,
+            price: price,
+            supplier: supplier,
+            category: category,
+            quanity: x.getAttribute('data-quantity')
+        }
+        CART.add(id, item);
+    })
+}
+const loggedUserId = null;
+document.getElementById('sign-in').addEventListener('click', (ev) => {
+    loggedUserId = querySelector("userId").dataset.userId;
+    console.log(loggedUserId);
+})
+
+
 function getProduct(ev) {
     ev.preventDefault();
     let id = parseInt(ev.target.getAttribute('data-id'));
@@ -154,6 +193,7 @@ function getProduct(ev) {
         category: category,
         quanity: 1
     }
+    console.log(item);
     CART.add(id, item);
 }
 

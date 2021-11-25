@@ -49,16 +49,16 @@
                                     @foreach (var cart in Model)
                                     {
                                         total = total + (cart.Product.DefaultPrice * cart.Quantity);
-                                        <tr>
+                                        <tr class="cart-item" data-id="@cart.Product.Id" data-description="@cart.Product.Description" data-supplier="@cart.Product.Supplier" data-category="@cart.Product.ProductCategory" data-quantity="@cart.Quantity">
                                             <th scope="row" class="border-0">
                                                 <div class="p-2">
                                                     <img src="~/img/@(cart.Product.Name).jpg" alt="" width="70" class="img-fluid rounded shadow-sm">
                                                     <div class="ml-3 d-inline-block align-middle">
-                                                        <h5 class="mb-0"> <a href="#" class="text-dark d-inline-block align-middle">@cart.Product.Name</a></h5><span class="text-muted font-weight-normal font-italic d-block">Category: @cart.Product.ProductCategory.Name</span>
+                                                        <h5 class="mb-0" id="@cart.Product.Name"> <a href="#" class="text-dark d-inline-block align-middle">@cart.Product.Name</a></h5><span class="text-muted font-weight-normal font-italic d-block">Category: @cart.Product.ProductCategory.Name</span>
                                                     </div>
                                                 </div>
                                             </th>
-                                            <td class="border-0 align-middle"><strong>@cart.Product.DefaultPrice @cart.Product.Currency</strong></td>
+                                            <td class="border-0 align-middle" data-price="@cart.Product.DefaultPrice"><strong>@cart.Product.DefaultPrice @cart.Product.Currency</strong></td>
                                             <td class="border-0 align-middle">
                                                 <strong>
                                                     <a class="btn btn-danger" id="minus" data-id="@cart.Product.Id">-</a>
@@ -82,6 +82,7 @@
                     </div>
                 </div>
             </div>
+
 
             <div class="row py-5 p-4 bg-white rounded shadow-sm">
                 <div class="col-lg-6">
