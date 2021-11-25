@@ -268,7 +268,8 @@ namespace Codecool.CodecoolShop.Controllers
             {
 
                 ViewBag.Message = $"Welcome {model.Email}";
-                HttpContext.Response.Cookies.Append("user", user.Email, new CookieOptions { Expires = DateTime.Now.AddHours(3) });
+                HttpContext.Response.Cookies.Append("userId", user.Id.ToString(), new CookieOptions { Expires = DateTime.Now.AddHours(3) });
+                HttpContext.Response.Cookies.Append("userName", user.BuyerName, new CookieOptions { Expires = DateTime.Now.AddHours(3) });
                 return RedirectToAction("Index");
             }
             else
