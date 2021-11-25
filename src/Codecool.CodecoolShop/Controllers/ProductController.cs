@@ -11,6 +11,9 @@ using Codecool.CodecoolShop.Models;
 using Codecool.CodecoolShop.Services;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Hosting;
+using System.Web;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Web.Services3.Security.Utility;
 
 namespace Codecool.CodecoolShop.Controllers
 {
@@ -254,10 +257,12 @@ namespace Codecool.CodecoolShop.Controllers
         [HttpPost]
         public ActionResult Signin(SigninModel model)
         {
-            if (ModelState.IsValid && ProductService.IsValidUser(model) != null)
+            var user = ProductService.IsValidUser(model);
+            if (ModelState.IsValid && user != null)
             {
 
                 ViewBag.Message = $"Welcome {model.Email}";
+                HttpContext.Response.Cookies.Append("user", user.Id.ToString(), new CookieOptions { Expires = DateTime.Now.AddHours(3) });
                 return RedirectToAction("Index");
             }
             else
