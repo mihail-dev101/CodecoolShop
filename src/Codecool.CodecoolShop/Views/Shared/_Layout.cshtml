@@ -31,7 +31,27 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Product" asp-action="Signin">Sign in</a>
                         </li>
-                    </ul>
+                        @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+                            
+                        @{ if(HttpContextAccessor.HttpContext.Request.Cookies["userId"]!= null)
+            {
+                if (HttpContextAccessor.HttpContext.Request.Cookies["userName"] != null)
+                {
+                    <li class="nav-item" data-user-id="@HttpContextAccessor.HttpContext.Request.Cookies["userId"]">
+                        Hello @HttpContextAccessor.HttpContext.Request.Cookies["userName"]
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item" data-user-id="@HttpContextAccessor.HttpContext.Request.Cookies["userId"]">
+                        Hello User
+                    </li>
+                }      
+            }
+                            
+                        }
+                        
+                        </ul>
                 </div>
             </div>
                 <a id="go-to-cart" class="btn btn-secondary">
