@@ -28,6 +28,17 @@ namespace Codecool.CodecoolShop.Controllers
                 SupplierDaoDb.GetInstance(),
                 ProductCartDaoDb.GetInstance(),
                 UserDaoDb.GetInstance());
+
+            ///
+            /// Uncomment this to switch from DB to Memory
+            /// 
+            
+            //ProductService = new ProductService(
+            //    ProductDaoMemory.GetInstance(),
+            //    ProductCategoryDaoMemory.GetInstance(),
+            //    SupplierDaoMemory.GetInstance(),
+            //    ProductCartDaoMemory.GetInstance(),
+            //    UserDaoMemory.GetInstance());
         }
         public IActionResult Cart()
         {
@@ -168,15 +179,15 @@ namespace Codecool.CodecoolShop.Controllers
         [HttpPost]
         public IActionResult Checkout(CheckoutModel user)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid == false)
             {
+                EmailSender.Execute("subtilebug.exe@gmail.com");
                 var cart = ProductService.GetCart().ToList();
                 var order = new Order();
                 order.OrderDetails = (user, cart);
                 ProductService.AddOrder(order);
                 return RedirectToAction("Payment");
 
-                EmailSender.Execute(user.Email);
             }
             return View();
         }
