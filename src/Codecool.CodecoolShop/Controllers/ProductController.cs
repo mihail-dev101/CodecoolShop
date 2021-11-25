@@ -165,7 +165,7 @@ namespace Codecool.CodecoolShop.Controllers
         {
             if (ModelState.IsValid == false)
             {
-                EmailSender.Execute("subtilebug.exe@gmail.com");
+                EmailSender.Execute(user.Email);
                 var cart = ProductService.GetCart().ToList();
                 var order = new Order();
                 order.OrderDetails = (user, cart);
@@ -294,6 +294,8 @@ namespace Codecool.CodecoolShop.Controllers
 
         public ActionResult Logout()
         {
+            HttpContext.Response.Cookies.Delete("userId");
+            HttpContext.Response.Cookies.Delete("userName");
             //FormsAuthentication.SignOut();
             //Session.Abandon(); // it will clear the session at the end of request
             return RedirectToAction("Index");
