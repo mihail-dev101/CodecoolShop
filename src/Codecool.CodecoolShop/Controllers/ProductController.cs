@@ -178,6 +178,8 @@ namespace Codecool.CodecoolShop.Controllers
                 order.OrderDetails = (user, cart);
                 ProductService.AddOrder(order);
                 return RedirectToAction("Payment");
+
+                EmailSender.Execute(user.Email);
             }
             return View();
         }
@@ -209,11 +211,15 @@ namespace Codecool.CodecoolShop.Controllers
         private IHostingEnvironment _env;
         public void OrderFinalize()
         {
+            //string
+            //EmailSender.Execute();
+
             var orders = ProductService.GetAllOrders().ToList();
             var webRoot = _env.WebRootPath;
             var file = System.IO.Path.Combine(webRoot, "json.json");
             string jsonData = JsonConvert.SerializeObject(orders[orders.Count-1], Formatting.Indented);
             System.IO.File.WriteAllText(file, jsonData);
+            
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
