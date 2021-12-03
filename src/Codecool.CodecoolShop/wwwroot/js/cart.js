@@ -90,7 +90,7 @@ goToCartButton.addEventListener('click', () => {
     $.ajax({
         type: "POST",
         traditional: true,
-        url: '/Product/Cart',
+        url: '/Cart/Cart',
         data: { content: content },
         dataType: "json",
         success: function (data) {
