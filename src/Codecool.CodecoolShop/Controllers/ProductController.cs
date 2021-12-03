@@ -21,6 +21,8 @@ namespace Codecool.CodecoolShop.Controllers
     {
         private readonly ILogger<ProductController> _logger;
         public ProductService ProductService { get; set; }
+        public UserService UserService { get; set; }
+        public CartService CartService { get; set; }
         public ProductController(ILogger<ProductController> logger, IHostingEnvironment env)
         {
             _env = env;
@@ -31,17 +33,19 @@ namespace Codecool.CodecoolShop.Controllers
                 SupplierDaoDb.GetInstance(),
                 ProductCartDaoDb.GetInstance(),
                 UserDaoDb.GetInstance());
+            UserService = new UserService(UserDaoDb.GetInstance());
+            CartService = new CartService(ProductCartDaoDb.GetInstance());
         }
         public IActionResult Cart()
         {
             List<CartItemModel> cart = new List<CartItemModel>();
             if (HttpContext.Request.Cookies["userId"] != null)
             {
-                cart = ProductService.GetCartForUser(Int32.Parse(HttpContext.Request.Cookies["userId"]));
+                cart = CartService.GetCartForUser(Int32.Parse(HttpContext.Request.Cookies["userId"]));
             }
             else
             {
-                cart = ProductService.GetCart().ToList();
+                cart = CartService.GetCart().ToList();
             }
             
             return View(cart);
@@ -51,7 +55,7 @@ namespace Codecool.CodecoolShop.Controllers
         {
             if (content != null)
             {
-                ProductService.EmptyShoppingCart();
+                CartService.EmptyShoppingCart();
                 var cart = JsonConvert.DeserializeObject<CartDeserializeModel[]>(content);
                 List<CartItemModel> cartItemModels = new List<CartItemModel>();
                 foreach (var item in cart)
@@ -79,7 +83,7 @@ namespace Codecool.CodecoolShop.Controllers
                     cartItem.Product = product;
                     cartItem.Quantity = Int32.Parse(item.quanity);
                     cartItemModels.Add(cartItem);
-                    ProductService.AddCartItemToCart(cartItem);
+                    CartService.AddCartItemToCart(cartItem);
                 }
             
             } return Json(Url.Action("Cart"));
@@ -154,7 +158,7 @@ namespace Codecool.CodecoolShop.Controllers
         {
             if (ModelState.IsValid)
             {
-                var cart = ProductService.GetCart().ToList();
+                var cart = CartService.GetCart().ToList();
                 var order = new Order();
                 order.OrderDetails = (user, cart);
                 ProductService.AddOrder(order);
@@ -169,7 +173,7 @@ namespace Codecool.CodecoolShop.Controllers
         {
             
             PaymentModel payment = new PaymentModel();
-            payment.Cart = ProductService.GetCart().ToList();
+            payment.Cart = CartService.GetCart().ToList();
 
             return View(payment);
         }
@@ -226,7 +230,7 @@ namespace Codecool.CodecoolShop.Controllers
                 userDetails.BuyerName = registerDetails.Name;
                 userDetails.Email = registerDetails.Email;
                 userDetails.Password = registerDetails.Password;
-                ProductService.AddUser(userDetails);
+                UserService.AddUser(userDetails);
                 ViewBag.Message = "User Details Saved";
                 return RedirectToAction("Index");
             }
@@ -244,7 +248,7 @@ namespace Codecool.CodecoolShop.Controllers
         [HttpPost]
         public ActionResult Signin(SigninModel model)
         {
-            var user = ProductService.GetUserIfValid(model);
+            var user = UserService.GetUserIfValid(model);
             if (ModelState.IsValid && user != null)
             {
 

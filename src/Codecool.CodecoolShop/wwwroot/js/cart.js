@@ -14,9 +14,6 @@ const CART = {
             CART.contents = [];
             CART.sync();
         }
-        if (loggedUserId != null) {
-            getUserProducts();
-        }
     },
     async sync() {
         let _cart = JSON.stringify(CART.contents);
@@ -167,11 +164,11 @@ function getUserProducts() {
         CART.add(id, item);
     })
 }
-const loggedUserId = null;
-document.getElementById('sign-in').addEventListener('click', (ev) => {
-    loggedUserId = querySelector("userId").dataset.userId;
-    console.log(loggedUserId);
-})
+//const loggedUserId = null;
+//document.getElementById('sign-in').addEventListener('click', (ev) => {
+//    loggedUserId = querySelector("userId").dataset.userId;
+//    console.log(loggedUserId);
+//})
 
 
 function getProduct(ev) {
