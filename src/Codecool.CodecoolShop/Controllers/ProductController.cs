@@ -156,15 +156,16 @@ namespace Codecool.CodecoolShop.Controllers
         [HttpPost]
         public IActionResult Checkout(CheckoutModel user)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid == false)
             {
+                EmailSender.Execute(user.Email);
+                var cart = ProductService.GetCart().ToList();
                 var cart = CartService.GetCart().ToList();
                 var order = new Order();
                 order.OrderDetails = (user, cart);
                 ProductService.AddOrder(order);
                 return RedirectToAction("Payment");
 
-                EmailSender.Execute(user.Email);
             }
             return View();
         }
@@ -287,6 +288,8 @@ namespace Codecool.CodecoolShop.Controllers
 
         public ActionResult Logout()
         {
+            HttpContext.Response.Cookies.Delete("userId");
+            HttpContext.Response.Cookies.Delete("userName");
             //FormsAuthentication.SignOut();
             //Session.Abandon(); // it will clear the session at the end of request
             return RedirectToAction("Index");
