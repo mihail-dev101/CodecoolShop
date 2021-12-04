@@ -1,12 +1,9 @@
-﻿////const { data } = require("jquery");
-////
-
-let PRODUCTS = [];
+﻿let PRODUCTS = [];
 const CART = {
     KEY: 'bkasjbdfkjasdkfjhaksdfjskd',
     contents: [],
     init() {
-        
+
         let _contents = localStorage.getItem(CART.KEY);
         if (_contents) {
             CART.contents = JSON.parse(_contents);
@@ -36,13 +33,13 @@ const CART = {
             else {
                 CART.increase(id, 1);
             }
-            
+
         } else {
             PRODUCTS.push(item);
             CART.contents.push(item);
             CART.sync();
-            }
-        
+        }
+
     },
     increase(id, qty = 1) {
         CART.contents = CART.contents.map(item => {
@@ -164,11 +161,6 @@ function getUserProducts() {
         CART.add(id, item);
     })
 }
-//const loggedUserId = null;
-//document.getElementById('sign-in').addEventListener('click', (ev) => {
-//    loggedUserId = querySelector("userId").dataset.userId;
-//    console.log(loggedUserId);
-//})
 
 
 function getProduct(ev) {
@@ -206,7 +198,7 @@ document.querySelectorAll('#minus').forEach(button => {
         if (CART.find(parseInt(ev.target.getAttribute('data-id')))) {
             ev.target.parentElement.querySelector('span').innerText = CART.find(parseInt(ev.target.getAttribute('data-id'))).quanity;
         }
-        
+
     })
 })
 
@@ -223,8 +215,4 @@ document.querySelectorAll('#remove').forEach(button => {
     })
 })
 
-
-
-    
-    
-
+export { CART };
