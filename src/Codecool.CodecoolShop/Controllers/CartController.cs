@@ -53,6 +53,7 @@ namespace Codecool.CodecoolShop.Controllers
             {
                 CartService.EmptyShoppingCart();
                 var cart = JsonConvert.DeserializeObject<CartDeserializeModel[]>(content);
+                var userID = HttpContext.Request.Cookies["userId"];
                 List<CartItemModel> cartItemModels = new List<CartItemModel>();
                 foreach (var item in cart)
                 {
@@ -78,6 +79,7 @@ namespace Codecool.CodecoolShop.Controllers
                     product.Currency = "$";
                     cartItem.Product = product;
                     cartItem.Quantity = Int32.Parse(item.quanity);
+                    cartItem.UserId = Int32.Parse(userID);
                     cartItemModels.Add(cartItem);
                     CartService.AddCartItemToCart(cartItem);
                 }

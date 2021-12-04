@@ -48,11 +48,13 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody id="cart">
+                            <tbody id="cart"> 
                                 @{decimal total = 0;
                                 }
                                 @foreach (var cart in Model)
                                 {
+                                    if(cart.UserId == 1) 
+                                    { 
                                     total = total + (cart.Product.DefaultPrice * cart.Quantity);
                                     <tr class="cart-item" data-id="@cart.Product.Id" data-description="@cart.Product.Description" data-supplier="@cart.Product.Supplier" data-category="@cart.Product.ProductCategory" data-quantity="@cart.Quantity">
                                         <th scope="row" class="border-0">
@@ -81,6 +83,7 @@
                                             </a>
                                         </td>
                                     </tr>
+                                    }
                                 }
                             </tbody>
                         </table>
