@@ -4,35 +4,38 @@
 
 @model Codecool.CodecoolShop.Models.IndexModel
 
+@section Scripts{
+    <script src="~/js/cart.js"></script>
+}
 
 <div class="dropdown-cat">
     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Category
     </a>
-    
+
 
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
         @foreach (var category in Model.ProductCategories)
         {
             <a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="ProductsByCategory" asp-route-id="@category.Id">@category.Name</a>
         }
-        </div>
-    
+    </div>
+
 </div>
 <div class="dropdown-sup">
     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Supplier
     </a>
-    
+
 
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
         @foreach (var supplier in Model.ProductSuppliers)
         {
-        <a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="ProductsBySupplier" asp-route-id="@supplier.Id">@supplier.Name</a>
+            <a class="dropdown-item" asp-area="" asp-controller="Product" asp-action="ProductsBySupplier" asp-route-id="@supplier.Id">@supplier.Name</a>
         }
-        </div>
+    </div>
 
-     
+
 </div>
 
 <div class="container">
@@ -61,7 +64,5 @@
 
 
 </div>
-@section Scripts{ 
-    <script src="~/js/cart.js"></script>
-}
+
 

@@ -214,5 +214,3 @@ document.querySelectorAll('#remove').forEach(button => {
         removeFromCart(ev);
     })
 })
-
-export { CART };
