@@ -46,9 +46,9 @@ namespace Codecool.CodecoolShop.Services
             this.productCartDao.RemoveItemFromCartTotally(product.Id);
         }
 
-        public void EmptyShoppingCart()
+        public void EmptyShoppingCart(int? userId)
         {
-            this.productCartDao.EmptyCart();
+            this.productCartDao.EmptyCart(userId);
         }
     }
 }

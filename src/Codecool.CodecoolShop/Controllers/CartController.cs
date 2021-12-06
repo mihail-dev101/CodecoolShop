@@ -51,12 +51,13 @@ namespace Codecool.CodecoolShop.Controllers
         {
             if (content != null)
             {
-                CartService.EmptyShoppingCart();
+                CartService.EmptyShoppingCart(null);
                 var cart = JsonConvert.DeserializeObject<CartDeserializeModel[]>(content);
                 var userID = "-1";
                 if(HttpContext.Request.Cookies["userId"] != null)
                 {
                     userID = HttpContext.Request.Cookies["userId"];
+                    CartService.EmptyShoppingCart(Int32.Parse(userID));
                 }
                 
                 List<CartItemModel> cartItemModels = new List<CartItemModel>();

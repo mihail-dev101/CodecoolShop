@@ -49,7 +49,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 else
                 {
                     command.CommandText = $"UPDATE cart " +
-                        $"SET quantity = quantity+1" +
+                        $"SET quantity = {userCart[0].Quantity + 1}" +
                         $"WHERE user_id = {item.UserId} and product_id={item.Product.Id}";
                 }
                 command.ExecuteNonQuery();
@@ -66,10 +66,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 command.Connection = connection;
                 if (user_id!=null)
                 {
-                    command.CommandText = $"DELETE FROM cart WHERE user_id = {user_id} and user_id = 0";
+                    command.CommandText = $"DELETE FROM cart WHERE user_id = {user_id} or user_id = 0";
                 }
                 else
                 {
+                
                     command.CommandText = $"DELETE FROM cart WHERE user_id = 0";
                 }
                 command.ExecuteNonQuery();
@@ -92,7 +93,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                     while (reader.Read())
                     {
                         CartItemModel item = new CartItemModel();
-                        int productId = Int32.Parse((string)reader["product_id"]);
+                        int productId = (int)reader["product_id"];
                         item.Product = ProductDaoDb.GetInstance().Get(productId);
                         item.Quantity = (int)reader["quantity"];
                         item.UserId = (int)reader["user_id"];
@@ -103,7 +104,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             return cart;
         }
 
-        public void Remove(int id, int? user_id=null)
+        public void Remove(int id, int? user_id=0)
         {
             using (var connection = factory.CreateConnection())
             {
@@ -116,7 +117,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
             }
         }
 
-        public void RemoveItemFromCartTotally(int id, int? user_id=null)
+        public void RemoveItemFromCartTotally(int id, int? user_id=0)
         {
             using (var connection = factory.CreateConnection())
             {
@@ -144,7 +145,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                     while (reader.Read())
                     {
                         CartItemModel item = new CartItemModel();
-                        int productId = Int32.Parse((string)reader["product_id"]);
+                        int productId = (int)reader["product_id"];
                         item.Product = ProductDaoDb.GetInstance().Get(productId);
                         item.Quantity = (int)reader["quantity"];
                         item.UserId = (int)reader["user_id"];
@@ -169,7 +170,7 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                     while (reader.Read())
                     {
                         CartItemModel item = new CartItemModel();
-                        int productId = Int32.Parse((string)reader["product_id"]);
+                        int productId = (int)reader["product_id"];
                         item.Product = ProductDaoDb.GetInstance().Get(productId);
                         item.Quantity = (int)reader["quantity"];
                         item.UserId = (int)reader["user_id"];
