@@ -33,19 +33,30 @@ namespace Codecool.CodecoolShop.Daos.Implementations
 
         public void Add(CartItemModel item)
         {
+            var userCart = ProductCartDaoDb.GetInstance().GetUserCart(item.UserId);
+            var userCartItem = userCart.FindAll(x => x.Product.Id == item.Product.Id);
             using (var connection = factory.CreateConnection())
             {
                 connection.ConnectionString = connectionString;
                 connection.Open();
                 var command = factory.CreateCommand();
                 command.Connection = connection;
-                command.CommandText = $"INSERT INTO cart (product_id, user_id, quantity)" +
+                if (userCartItem.Count ==0)
+                {
+                    command.CommandText = $"INSERT INTO cart (product_id, user_id, quantity)" +
                     $"VALUES('{item.Product.Id}',{item.UserId},{item.Quantity});";
+                }
+                else
+                {
+                    command.CommandText = $"UPDATE cart " +
+                        $"SET quantity = quantity+1" +
+                        $"WHERE user_id = {item.UserId} and product_id={item.Product.Id}";
+                }
                 command.ExecuteNonQuery();
             }
         }
 
-        public void EmptyCart(int? user_id = 0)
+        public void EmptyCart(int? user_id)
         {
             using (var connection = factory.CreateConnection())
             {
@@ -53,7 +64,14 @@ namespace Codecool.CodecoolShop.Daos.Implementations
                 connection.Open();
                 var command = factory.CreateCommand();
                 command.Connection = connection;
-                command.CommandText = $"DELETE FROM cart WHERE user_id = {user_id} ";
+                if (user_id!=null)
+                {
+                    command.CommandText = $"DELETE FROM cart WHERE user_id = {user_id} and user_id = 0";
+                }
+                else
+                {
+                    command.CommandText = $"DELETE FROM cart WHERE user_id = 0";
+                }
                 command.ExecuteNonQuery();
             }
         }
@@ -192,5 +210,11 @@ namespace Codecool.CodecoolShop.Daos.Implementations
         {
             throw new NotImplementedException();
         }
+
+        public void RemoveItemFromCartTotally(int id, int user_id)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
